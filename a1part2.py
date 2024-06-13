@@ -190,8 +190,6 @@ for i in range(iterations):
     for j in range(len(res)):
         for k in range(3):
             averages[k].append(res[k])
-    if i%10 == 0:
-        print(i)
 
 #Plots average rewards for part 2.2
 plt.boxplot(averages)
@@ -207,8 +205,6 @@ for i in range(iterations):
     for j in range(len(res)):
         for k in range(3):
             averages[k].append(res[k])
-    if i%10 == 0:
-        print(i)
 
 #Plots average reward for part 2a
 plt.boxplot(averages)
@@ -224,8 +220,6 @@ for i in range(iterations):
     for j in range(len(res)):
         for k in range(3):
             averages[k].append(res[k])
-    if i%10 == 0:
-        print(i)
 
 #Plots average reward for part 2b
 plt.boxplot(averages)
