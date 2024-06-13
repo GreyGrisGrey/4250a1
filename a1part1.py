@@ -66,7 +66,7 @@ def singleIterationPart1():
     #Does make it find the optimal selection slower however
     #Setting alpha too low seems to cause the gradient algorithm to have some troubles finding the optimal selection
     #Setting it too high makes it jump around a lot, but if it isn't excessively high it finds the path eventually.
-    #Theres a possible bug where the non-optimistic algorithm never finds the optimal selection on any runs, that may have just been a very unlucky attempt though as it only happened once
+    #Theres a possible bug where the non-optimistic algorithm never finds the optimal selection on any runs, that may have just been a very unlucky attempt though as it only happened once in numerous trials
 
     #Setting up values to be used later
     #Would have been cleaner as a couple arrays of arrays but it shouldn't effect performance
@@ -123,6 +123,7 @@ def singleIterationPart1():
         optimisticPolicy[selectedArm] = (numpy.random.normal(means[selectedArm], 1) + optimisticCounts[selectedArm]*optimisticPolicy[selectedArm])/(optimisticCounts[selectedArm]+1)
         optimisticCounts[selectedArm] += 1
         #Calculates the updated gradient policy
+        selectedArm, eSum = selectGradiant(gradiantPolicy)
         gradiantReward = numpy.random.normal(means[selectedArm], 1)
         gradiantPolicy[selectedArm] = gradiantPolicy[selectedArm] + gradiantAlpha*(gradiantReward - (gradiantRewardSum/gradiantCount))*(1-(exp(gradiantPolicy[selectedArm])/eSum))
         for i in range(10):
@@ -135,7 +136,7 @@ def singleIterationPart1():
         else:
             gradiantCount += 1
         timeStep += 1
-    return rewards, probabilities, means
+    return rewards, probabilities
 
 
 #Creates and fills out the probability and average reward matrices.
@@ -161,6 +162,8 @@ for i in range(iterations):
             averages[k][j] += res[0][j][k]
         for k in range(4):
             probabilities[k][j] += res[1][j][k]
+    if i%10 == 0:
+        print(i)
 #Divides the average rewards and the probability of selecting by the number of iterations, to make the graphs look nicer
 #I tried doing this in the above step, but it took forever.
 for i in range(3):
